@@ -18,7 +18,6 @@ import {
   useForm,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FIELD_NAMES, FIELD_TYPES } from "..";
 import { signInSchema, signUpSchema } from "@/lib/zod";
 import {
   Form,
@@ -41,6 +40,19 @@ interface Props<T extends FieldValues> {
 const schemas = {
   signIn: signInSchema,
   signUp: signUpSchema,
+};
+
+const FIELD_NAMES = {
+  fullName: "Full name",
+  email: "Email",
+  password: "Password",
+  avatar: "Upload your avatar",
+};
+
+const FIELD_TYPES = {
+  fullname: "text",
+  email: "email",
+  password: "password",
 };
 
 function AuthForm<T extends FieldValues>({

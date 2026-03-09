@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CarouselContent, CarouselItem } from "./ui/carousel";
 import Image from "next/image";
-import { getYoutubeThumbnail } from "@/lib/getYoutubeThumbnail";
+import { getYoutubeThumbnail } from "@/lib/utils";
 import { Badge } from "./ui/badge";
 import { ClientCarousel } from "./ClientCarousel";
 import type { Anime } from "@/types";

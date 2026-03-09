@@ -6,7 +6,7 @@ import {
   ImageKitServerError,
   ImageKitUploadNetworkError,
   ImageKitProvider,
-  Image as IKImage,
+  Image,
   upload,
 } from "@imagekit/next";
 import { useRef, useState } from "react";
@@ -115,7 +115,7 @@ const Upload = ({ value, onChange }: Props) => {
           <ImageKitProvider
             urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!}
           >
-            <IKImage
+            <Image
               src={preview}
               alt="Avatar"
               width={400}
