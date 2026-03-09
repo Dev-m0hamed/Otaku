@@ -38,8 +38,14 @@ export function ClientCarousel({
     <>
       <Carousel
         opts={{ loop: true }}
-        plugins={[Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true })]}
-        setApi={setApi}
+        plugins={[
+          Autoplay({
+            delay: 3000,
+            stopOnInteraction: false,
+            stopOnMouseEnter: true,
+          }),
+        ]}
+        setApi={(api) => setApi(api ?? null)}
         className="w-full"
       >
         {children}
