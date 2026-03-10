@@ -7,8 +7,9 @@ import { ClientCarousel } from "./ClientCarousel";
 import type { Anime } from "@/types";
 
 async function HeroCarousel() {
-  const res = await fetch("https://api.jikan.moe/v4/seasons/upcoming?limit=6");
-  const { data } = await res.json();
+const res = await fetch("https://api.jikan.moe/v4/seasons/upcoming?limit=6", { next: { revalidate: 3600 } });
+const json = await res.json();
+const data = json.data ?? [];
   return (
     <section className="px-7 md:pl-8 md:px-4 mt-3 mb-6">
       <div className="relative overflow-hidden rounded-lg">
