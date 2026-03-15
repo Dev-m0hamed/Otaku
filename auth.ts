@@ -42,6 +42,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     Google,
   ],
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === "google") {
+        await prisma.user.upsert({
+          where: { email: user.email! },
+          update: {},
+          create: {
+            email: user.email!,
+            name: user.name ?? "",
+            avatar: user.image ?? null,
+          },
+        });
+      }
+      return true;
+    },
     jwt({ token, user }) {
       if (user) token.id = user.id;
       return token;

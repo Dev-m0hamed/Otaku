@@ -9,8 +9,8 @@ async function layout({ children }: { children: React.ReactNode }) {
     <>
       <Header session={session} />
       <Separator className="mt-2" />
-      <main className="mx-auto pb-12">{children}</main>
-      <Footer/>
+      {children}
+      <Footer />
     </>
   );
 }

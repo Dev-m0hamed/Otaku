@@ -37,7 +37,7 @@ function Header({ session }: { session: Session | null }) {
             </Button>
           ) : (
             <Button variant="outline" asChild size="icon">
-              <Link href="/sign-in" aria-label="sign in">
+              <Link href="/sign-up" aria-label="sign up">
                 <LogIn />
               </Link>
             </Button>
@@ -52,7 +52,7 @@ function Header({ session }: { session: Session | null }) {
             </Button>
           ) : (
             <Button variant="outline" asChild>
-              <Link href="/sign-in">Login</Link>
+              <Link href="/sign-up">Login</Link>
             </Button>
           )}
         </div>
