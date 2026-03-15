@@ -17,10 +17,8 @@ interface Props {
 }
 
 async function AnimeList({ title, description, url }: Props) {
-  await new Promise((resolve) => setTimeout(resolve, 10000)); // Simulate loading delay
-  const res = await fetch(url, { next: { revalidate: 3600 } });
-  const json = await res.json();
-  const data = json.data ?? [];
+  const res = await fetch(url);
+  const { data } = await res.json();
   return (
     <section className="mb-12 pr-4 lg:pr-8">
       <div className="flex items-center justify-between mb-6 pl-4 lg:pl-8">

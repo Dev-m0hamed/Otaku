@@ -7,11 +7,17 @@ import { ClientCarousel } from "./ClientCarousel";
 import type { Anime } from "@/types";
 
 async function HeroCarousel() {
+<<<<<<< HEAD
   const res = await fetch("https://api.jikan.moe/v4/seasons/upcoming?limit=6", {
     next: { revalidate: 3600 },
   });
   const json = await res.json();
   const data = json.data ?? [];
+=======
+const res = await fetch("https://api.jikan.moe/v4/seasons/upcoming?limit=6", { next: { revalidate: 3600 } });
+const json = await res.json();
+const data = json.data ?? [];
+>>>>>>> dac1a551ffd2038fd9bcccbd4e2d65ada5ebe646
   return (
     <section className="px-7 md:pl-8 md:px-4 mt-3 mb-6">
       <div className="relative overflow-hidden rounded-lg">
