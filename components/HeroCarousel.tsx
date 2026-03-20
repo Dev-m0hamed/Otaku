@@ -1,23 +1,17 @@
 import Link from "next/link";
 import { CarouselContent, CarouselItem } from "./ui/carousel";
 import Image from "next/image";
-import { getYoutubeThumbnail } from "@/lib/utils";
+import { getYoutubeThumbnail, toSlug } from "@/lib/utils";
 import { Badge } from "./ui/badge";
 import { ClientCarousel } from "./ClientCarousel";
 import type { Anime } from "@/types";
 
 async function HeroCarousel() {
-<<<<<<< HEAD
   const res = await fetch("https://api.jikan.moe/v4/seasons/upcoming?limit=6", {
     next: { revalidate: 3600 },
   });
   const json = await res.json();
   const data = json.data ?? [];
-=======
-const res = await fetch("https://api.jikan.moe/v4/seasons/upcoming?limit=6", { next: { revalidate: 3600 } });
-const json = await res.json();
-const data = json.data ?? [];
->>>>>>> dac1a551ffd2038fd9bcccbd4e2d65ada5ebe646
   return (
     <section className="px-7 md:pl-8 md:px-4 mt-3 mb-6">
       <div className="relative overflow-hidden rounded-lg">
@@ -31,7 +25,7 @@ const data = json.data ?? [];
                   className="basis-full relative h-87.5 md:h-100 lg:h-137.5 pl-8 md:pl-4"
                 >
                   <Link
-                    href="/"
+                    href={`/anime/${anime.mal_id}/${toSlug(anime.title_english ? anime.title_english : anime.title)}`}
                     className="absolute inset-0 z-30"
                     aria-label={`View details for ${anime.title}`}
                   />

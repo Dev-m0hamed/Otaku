@@ -1,5 +1,5 @@
 import { getAnimeTitle } from "@/lib/utils";
-import { TopAnimeNavigation } from "@/components/TopAnimeNavigation";
+import { TopAnimeNavigation } from "@/components/anime/TopAnimeNavigation";
 
 async function layout({
   children,

@@ -2,11 +2,12 @@ import Image from "next/image";
 import { Calendar, Clock, Star } from "lucide-react";
 import Link from "next/link";
 import type { Anime } from "@/types";
+import { toSlug } from "@/lib/utils";
 
 function AnimeCard({ anime }: { anime: Anime }) {
   return (
     <Link
-      href="/"
+      href={`/anime/${anime.mal_id}/${toSlug(anime.title_english ? anime.title_english : anime.title)}`}
       className="group transition-all duration-300 hover:-translate-y-1"
     >
       <div className="w-full h-auto aspect-2/3 flex flex-col">

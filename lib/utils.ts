@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { AnimeTypeInfo } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -15,9 +16,21 @@ export function getYoutubeThumbnail(embedUrl: string): string | null {
   return `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
 }
 
-interface AnimeTypeInfo {
-  title: string;
-  description: string;
+export function getCurrentSeason(): { year: number; season: string } {
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  const year = now.getFullYear();
+
+  const season =
+    month <= 3
+      ? "winter"
+      : month <= 6
+        ? "spring"
+        : month <= 9
+          ? "summer"
+          : "fall";
+
+  return { year, season };
 }
 
 export function getAnimeTitle(type: string | undefined): AnimeTypeInfo {
@@ -78,4 +91,22 @@ export function getAnimeTitle(type: string | undefined): AnimeTypeInfo {
         description: "Explore the best anime collections",
       };
   }
+}
+
+export const getStatusColor = (status: string) => {
+  switch (status.toLowerCase()) {
+    case "finished airing":
+      return "bg-green-500/20 text-green-700 border-green-500/30";
+    case "currently airing":
+      return "bg-blue-500/20 text-blue-700 border-blue-500/30";
+    case "not yet aired":
+      return "bg-yellow-500/20 text-yellow-700 border-yellow-500/30";
+    default:
+      return "bg-muted/20 text-muted-foreground border-muted/30";
+  }
+};
+
+export function toSlug(name: string) {
+  if (!name) return;
+  return name.replace(/\s+/g, "_");
 }

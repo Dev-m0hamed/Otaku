@@ -6,9 +6,10 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Link from "next/link";
-import { Button } from "./ui/button";
-import type { Anime } from "@/types";
+import { Button } from "@/components/ui/button";
 import AnimeCard from "./AnimeCard";
+import { getCurrentSeason } from "@/lib/utils";
+import type { Anime } from "@/types";
 
 interface Props {
   title: string;
@@ -17,8 +18,10 @@ interface Props {
 }
 
 async function AnimeList({ title, description, url }: Props) {
-  const res = await fetch(url);
-  const { data } = await res.json();
+  const res = await fetch(url, { next: { revalidate: 3600 } });
+  const json = await res.json();
+  const data = json.data ?? [];
+  const { year, season } = getCurrentSeason();
   return (
     <section className="mb-12 pr-4 lg:pr-8">
       <div className="flex items-center justify-between mb-6 pl-4 lg:pl-8">
@@ -26,7 +29,7 @@ async function AnimeList({ title, description, url }: Props) {
           <h2 className="text-3xl font-bold">{title}</h2>
           <p className="text-muted-foreground mt-1">{description}</p>
         </div>
-        <Link href="/anime/top">
+        <Link href={title === "Top Rated" ? "/anime/top" : `anime/season/${year}/${season}`}>
           <Button variant="outline" className="py-0 px-3">
             View All
           </Button>
@@ -55,7 +58,7 @@ async function AnimeList({ title, description, url }: Props) {
             </div>
           </div>
         </Carousel>
-      </div>  
+      </div>
     </section>
   );
 }

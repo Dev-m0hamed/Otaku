@@ -1,29 +1,45 @@
 "use client";
 
 import Link from "next/link";
-import Search from "./Search";
 import ThemeToggle from "./ThemeToggle";
 import { Button } from "./ui/button";
-import { Search as SearchIcon, LogIn, LogOut } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
+import { Search, LogIn, LogOut } from "lucide-react";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
+import { Input } from "./ui/input";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function Header({ session }: { session: Session | null }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const searchRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (isOpen) searchRef.current?.focus();
-  }, [isOpen]);
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/anime?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery("");
+      setIsSearchVisible(false);
+    }
+  };
   return (
     <header className="w-full bg-background">
-      <div className="flex items-center justify-between p-4 mx-auto max-w-7xl">
-        <Link className="text-4xl font-bold text-foreground" href="/">
-          OTAKU
+      <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
+        <Link href="/" className="flex items-center">
+          <div className="w-33.75 h-10 flex items-center justify-center">
+            <span className="font-bold text-4xl text-foreground font-[Poppins]">
+              OTAKU
+            </span>
+          </div>
         </Link>
+
         <div className="md:hidden flex items-center gap-2">
-          <Button variant="ghost" onClick={() => setIsOpen(!isOpen)}>
-            <SearchIcon className="size-4" />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsSearchVisible(!isSearchVisible)}
+          >
+            <Search className="size-5" />
           </Button>
           <ThemeToggle />
           {session ? (
@@ -43,8 +59,18 @@ function Header({ session }: { session: Session | null }) {
             </Button>
           )}
         </div>
+
         <div className="hidden md:flex items-center gap-3 min-w-lg">
-          <Search />
+          <form onSubmit={handleSearch} className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input
+              type="search"
+              placeholder="Search anime..."
+              className="pl-10"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </form>
           <ThemeToggle />
           {session ? (
             <Button variant="outline" onClick={() => signOut()}>
@@ -57,9 +83,22 @@ function Header({ session }: { session: Session | null }) {
           )}
         </div>
       </div>
-      <div className={`md:hidden px-4 pb-4 ${isOpen ? "block" : "hidden"}`}>
-        <Search ref={searchRef} />
-      </div>
+
+      {isSearchVisible && (
+        <div className="md:hidden px-4 pb-4">
+          <form onSubmit={handleSearch} className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input
+              type="search"
+              placeholder="Search anime..."
+              className="pl-10"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              autoFocus
+            />
+          </form>
+        </div>
+      )}
     </header>
   );
 }

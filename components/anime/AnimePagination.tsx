@@ -11,16 +11,20 @@ import {
 interface AnimePaginationProps {
   currentPage: number;
   totalPages: number;
-  type?: string;
+  basePath: string;
+  queryParams?: string;
 }
 
 function AnimePagination({
   currentPage,
   totalPages,
-  type,
+  basePath,
+  queryParams,
 }: AnimePaginationProps) {
-  const basePath = type ? `/anime/top/${type}` : "/anime/top";
-  const getPageUrl = (p: number) => `${basePath}?page=${p}`;
+  const getPageUrl = (p: number) =>
+    queryParams
+      ? `${basePath}?q=${queryParams}&page=${p}`
+      : `${basePath}?page=${p}`;
 
   if (totalPages <= 1) return null;
 

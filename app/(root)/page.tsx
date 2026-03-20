@@ -1,8 +1,10 @@
-import AnimeList from "@/components/AnimeList";
-import HeroCarousel from "@/components/HeroCarousel";
 import { Suspense } from "react";
 import HeroCarouselSkeleton from "@/components/loading/HeroCarouselSkeleton";
 import AnimeListSkeleton from "@/components/loading/AnimeListSkeleton";
+import dynamic from "next/dynamic";
+
+const AnimeList = dynamic(() => import("@/components/anime/AnimeList"));
+const HeroCarousel = dynamic(() => import("@/components/HeroCarousel"));
 
 export default function Home() {
   return (

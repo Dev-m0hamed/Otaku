@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Carousel } from "./ui/carousel";
+import Fade from "embla-carousel-fade";
 import Autoplay from "embla-carousel-autoplay";
 import { useState, useCallback, useEffect } from "react";
 import type { EmblaCarouselType } from "embla-carousel";
@@ -39,6 +40,7 @@ export function ClientCarousel({
       <Carousel
         opts={{ loop: true }}
         plugins={[
+          Fade(),
           Autoplay({
             delay: 3000,
             stopOnInteraction: false,
