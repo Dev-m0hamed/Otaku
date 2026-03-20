@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 
 async function page({ params }: PageProps) {
   const { malId } = await params;
-  await new Promise(res => setTimeout((res),10000))
   const res = await fetch(`https://api.jikan.moe/v4/anime/${malId}/full`, {
     next: { revalidate: 3600 },
   });
