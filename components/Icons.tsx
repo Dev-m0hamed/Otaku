@@ -153,7 +153,7 @@ function Icons({ com, isLiked, currentUser }: IconsProps) {
 
       {com.replies.length > 0 && (
         <div className="mt-3 space-y-3 pl-4 border-l-2 border-border/40">
-          {com.replies.map((reply) => (
+          {com.replies.map((reply: typeof com.replies[0]) => (
             <div key={reply.id} className="flex gap-2">
               <Avatar className="size-7 shrink-0">
                 <AvatarImage src={reply.user.image ?? undefined} />
