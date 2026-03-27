@@ -8,11 +8,56 @@ datasource db {
 }
 
 model User {
-  id       String    @id @default(cuid())
-  email    String @unique
-  password String?
-  name     String
-  avatar   String?
+  id           String        @id @default(cuid())
+  email        String        @unique
+  password     String?
+  name         String
+  image        String?
+  favorites    Favorite[]
+  comments     Comments[]
+  commentLikes CommentLike[]
 
   @@map("users")
+}
+
+model Favorite {
+  id            String  @id @default(cuid())
+  user          User    @relation(fields: [userId], references: [id])
+  mal_id        Int
+  userId        String
+  images        String?
+  title_english String?
+  title         String?
+  score         Int?
+  episodes      Int?
+  year          Int?
+  type          String?
+
+  @@unique([mal_id, userId])
+  @@map("favorite")
+}
+
+model Comments {
+  id           String        @id @default(cuid())
+  content      String
+  createdAt    DateTime      @default(now())
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  mal_id       Int
+  parentId     String?
+  parent       Comments?     @relation("Replies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies      Comments[]    @relation("Replies")
+  commentLikes CommentLike[]
+
+  @@map("comments")
+}
+
+model CommentLike {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  commentId String
+  comment   Comments @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, commentId])
 }

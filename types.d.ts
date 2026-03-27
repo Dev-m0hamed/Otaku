@@ -8,7 +8,7 @@ declare module "next-auth" {
   }
 }
 
-interface Anime {
+interface Anime extends Relations{
   mal_id: number;
   title: string;
   title_japanese: string;
@@ -24,11 +24,9 @@ interface Anime {
   studios: { mal_id: number; name: string; url: string }[];
   broadcast: { day: string; string: string };
   season: string;
-  year: string;
   scored_by: number;
   rank: number;
   popularity: number;
-  members: number;
   title_synonyms: [string];
   title_english: string;
   rating: string;
@@ -39,11 +37,18 @@ interface Anime {
   synopsis: string;
 }
 
+interface Relations {
+  relations: {
+    relation: string;
+    entry: { mal_id: number; type: string; name: string }[];
+  }[];
+}
+
 interface SignUpParams {
   fullName: string;
   email: string;
   password: string;
-  avatar?: string;
+  image?: string;
 }
 
 interface AnimeTypeInfo {
@@ -67,4 +72,40 @@ interface AnimeGridProps {
   currentPage: number;
   totalPages: number;
   basePath: string;
+}
+
+interface AddListProps {
+  data: Anime;
+  variant?:
+    | "default"
+    | "link"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | null
+    | undefined;
+  size?:
+    | "default"
+    | "xs"
+    | "sm"
+    | "lg"
+    | "icon"
+    | "icon-xs"
+    | "icon-sm"
+    | "icon-lg"
+    | null
+    | undefined;
+  className: string;
+  iconClass: string;
+  isFav: boolean | undefined;
+}
+
+interface IconsProps {
+  com: Comments & {
+    commentLikes: CommentLike[];
+    replies: (Comments & { user: User })[];
+  };
+  isLiked: boolean;
+  currentUser?: string;
 }

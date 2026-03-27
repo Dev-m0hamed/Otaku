@@ -6,6 +6,7 @@ import { getGenres } from "@/lib/genre";
 import { searchAnime } from "@/lib/searchAnime";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { toSlug } from "@/lib/utils";
 
 async function AnimePageContent({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams;
@@ -51,7 +52,7 @@ async function AnimePageContent({ searchParams }: PageProps) {
               {allGenres.map((gen) => (
                 <Link
                   key={gen.mal_id}
-                  href={`/anime/genre/${gen.mal_id}/${gen.name}`}
+                  href={`/anime/genre/${gen.mal_id}/${toSlug(gen.name)}`}
                 >
                   <Button
                     variant="secondary"

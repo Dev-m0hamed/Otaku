@@ -12,7 +12,7 @@ async function page({ params, searchParams }: PageProps) {
   const { page } = await searchParams;
   const currentPage = parseInt(page) || 1;
   const genreName = title
-    .replace(/%20/g, " ")
+    .replace(/_/g, " ")
     .replace(/\b\w/g, (l) => l.toUpperCase());
 
   const res = await fetch(

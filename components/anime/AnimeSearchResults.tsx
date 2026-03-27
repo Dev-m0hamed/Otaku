@@ -16,7 +16,16 @@ function AnimeSearchResults({
   currentPage: number;
   totalPages: number;
   searchQuery: string;
-}) {
+  }) {
+  if (!data || data.length === 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-muted-foreground">
+          No anime found matching your search.
+        </p>
+      </div>
+    );
+  }
   return (
     <>
       <div className="space-y-3">

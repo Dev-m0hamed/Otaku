@@ -93,7 +93,7 @@ export function getAnimeTitle(type: string | undefined): AnimeTypeInfo {
   }
 }
 
-export const getStatusColor = (status: string) => {
+export function getStatusColor(status: string) {
   switch (status.toLowerCase()) {
     case "finished airing":
       return "bg-green-500/20 text-green-700 border-green-500/30";
@@ -104,9 +104,18 @@ export const getStatusColor = (status: string) => {
     default:
       return "bg-muted/20 text-muted-foreground border-muted/30";
   }
-};
+}
 
 export function toSlug(name: string) {
   if (!name) return;
-  return name.replace(/\s+/g, "_");
+  return encodeURIComponent(name.replace(/\s+/g, "_"));
+}
+
+export function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
 }

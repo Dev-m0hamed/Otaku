@@ -1,14 +1,16 @@
 import { Anime } from "@/types";
 import Image from "next/image";
-import { Button } from "../ui/button";
 import { Calendar, StarIcon } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { getStatusColor } from "@/lib/utils";
 import Link from "next/link";
 import AnimeSidebar from "./AnimeSidebar";
 import AnimeContentSections from "./AnimeContentSections";
+import AddToList from "./AddToList";
+import { inFav } from "@/lib/actions/addToFav";
 
-function AnimeHeroSection({ data }: { data: Anime }) {
+async function AnimeHeroSection({ data }: { data: Anime }) {
+  const isFav = await inFav(data.mal_id)
   const statusColor = getStatusColor(data.status);
   const stats = [
     {
@@ -71,14 +73,14 @@ function AnimeHeroSection({ data }: { data: Anime }) {
                   />
                 </div>
                 <div className="hidden sm:block w-full">
-                  <Button
-                    variant="outline"
-                    size="sm"
+                  <AddToList
+                    data={data}
+                    variant={"outline"}
+                    size={"sm"}
                     className="w-full text-xs"
-                  >
-                    <StarIcon className="h-3.5 w-3.5 mr-1.5" />
-                    Add To List
-                  </Button>
+                    iconClass="h-3.5 w-3.5 mr-1.5"
+                    isFav={isFav}
+                  />
                 </div>
               </div>
               <div className="flex-1 text-center sm:text-left max-w-full">
@@ -161,10 +163,12 @@ function AnimeHeroSection({ data }: { data: Anime }) {
                     ))}
                 </div>
                 <div className="mt-4 flex sm:hidden">
-                  <Button className="w-full">
-                    <StarIcon className="h-4 w-4 mr-2" />
-                    Add To List
-                  </Button>
+                  <AddToList
+                    data={data}
+                    className="w-full"
+                    iconClass="h-4 w-4 mr-2"
+                    isFav={isFav}
+                  />
                 </div>
               </div>
             </div>

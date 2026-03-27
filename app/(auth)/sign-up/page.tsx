@@ -5,7 +5,7 @@ function page() {
   return (
     <AuthForm
       type="signUp"
-      defaultValues={{ fullName: "", email: "", password: "", avatar: "" }}
+      defaultValues={{ fullName: "", email: "", password: "", image: "" }}
       onSubmit={signUp}
     />
   );

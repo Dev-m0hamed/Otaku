@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Genre } from "@/types";
+import { toSlug } from "@/lib/utils";
 
 function GenreCategories({
   genres,
@@ -22,7 +23,7 @@ function GenreCategories({
           {genreList.map((genre) => (
             <Link
               key={genre.mal_id}
-              href={`/anime/genre/${genre.mal_id}/${genre.name}`}
+              href={`/anime/genre/${genre.mal_id}/${toSlug(genre.name)}`}
             >
               <Button
                 variant="secondary"

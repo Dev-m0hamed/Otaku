@@ -1,8 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-type EmptyStateType = "anime" | "search" | "error" | "generic";
+type EmptyStateType = "anime" | "search" | "error" | "generic" | "favorite";
 
 interface EmptyStateConfig {
   title: string;
@@ -42,6 +43,10 @@ export function EmptyState({
       title: "No Data Available",
       description: "There's nothing to show right now.",
     },
+    favorite: {
+      title: "No favorites yet",
+      description: "Start exploring anime and add them to your list",
+    },
   };
 
   const config = configs[type] || configs.generic;
@@ -61,6 +66,11 @@ export function EmptyState({
           {config.description}
         </p>
 
+        {type === "favorite" && (
+          <Button>
+            <Link href="/anime">Browse anime</Link>
+          </Button>
+        )}
         {showButton && onRetry && (
           <Button onClick={onRetry} variant="outline" className="mt-4">
             Try Again

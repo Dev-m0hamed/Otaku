@@ -46,7 +46,7 @@ const FIELD_NAMES = {
   fullName: "Full name",
   email: "Email",
   password: "Password",
-  avatar: "Upload your avatar",
+  image: "Upload your image",
 };
 
 const FIELD_TYPES = {
@@ -100,7 +100,7 @@ function AuthForm<T extends FieldValues>({
                     {FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}
                   </FormLabel>
                   <FormControl>
-                    {field.name === "avatar" ? (
+                    {field.name === "image" ? (
                       <Upload value={field.value} onChange={field.onChange} />
                     ) : (
                       <Input

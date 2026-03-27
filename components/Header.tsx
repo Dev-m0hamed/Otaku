@@ -3,12 +3,13 @@
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 import { Button } from "./ui/button";
-import { Search, LogIn, LogOut } from "lucide-react";
+import { Search, LogIn } from "lucide-react";
 import { Session } from "next-auth";
-import { signOut } from "next-auth/react";
 import { Input } from "./ui/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { getInitials } from "@/lib/utils";
 
 function Header({ session }: { session: Session | null }) {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -43,14 +44,14 @@ function Header({ session }: { session: Session | null }) {
           </Button>
           <ThemeToggle />
           {session ? (
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => signOut()}
-              aria-label="logout"
-            >
-              <LogOut className="size-4" />
-            </Button>
+            <Link href="/profile">
+              <Avatar>
+                <AvatarImage src={session?.user?.image ?? undefined} />
+                <AvatarFallback>
+                  {getInitials(session.user.name ?? "CN")}
+                </AvatarFallback>
+              </Avatar>
+            </Link>
           ) : (
             <Button variant="outline" asChild size="icon">
               <Link href="/sign-up" aria-label="sign up">
@@ -73,9 +74,14 @@ function Header({ session }: { session: Session | null }) {
           </form>
           <ThemeToggle />
           {session ? (
-            <Button variant="outline" onClick={() => signOut()}>
-              Logout
-            </Button>
+            <Link href="/profile">
+              <Avatar>
+                <AvatarImage src={session?.user?.image ?? undefined} />
+                <AvatarFallback>
+                  {getInitials(session.user.name ?? "CN")}
+                </AvatarFallback>
+              </Avatar>
+            </Link>
           ) : (
             <Button variant="outline" asChild>
               <Link href="/sign-up">Login</Link>

@@ -32,6 +32,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return {
             id: user.id,
             name: user.name,
+            image: user.image,
           };
         } catch (error) {
           if (error instanceof ZodError) return null;
@@ -46,22 +47,38 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (account?.provider === "google") {
         await prisma.user.upsert({
           where: { email: user.email! },
-          update: {},
+          update: {
+            name: user.name ?? "",
+            image: user.image ?? null,
+          },
           create: {
             email: user.email!,
             name: user.name ?? "",
-            avatar: user.image ?? null,
+            image: user.image ?? null,
           },
         });
       }
       return true;
     },
-    jwt({ token, user }) {
-      if (user) token.id = user.id;
+    async jwt({ token, user, account }) {
+      if (user) {
+        if (account?.provider === "google") {
+          const dbUser = await prisma.user.findUnique({
+            where: { email: token.email! },
+          });
+          token.id = dbUser?.id;
+        } else {
+          token.id = user.id;
+        }
+        token.name = user.name;
+        token.image = user.image;
+      }
       return token;
     },
     session({ session, token }) {
       session.user.id = token.id as string;
+      session.user.name = token.name as string;
+      session.user.image = token.image as string;
       return session;
     },
   },

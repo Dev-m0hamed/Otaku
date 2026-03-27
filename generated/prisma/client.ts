@@ -44,3 +44,18 @@ export { Prisma }
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Favorite
+ * 
+ */
+export type Favorite = Prisma.FavoriteModel
+/**
+ * Model Comments
+ * 
+ */
+export type Comments = Prisma.CommentsModel
+/**
+ * Model CommentLike
+ * 
+ */
+export type CommentLike = Prisma.CommentLikeModel

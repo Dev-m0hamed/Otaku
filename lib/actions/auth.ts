@@ -23,7 +23,7 @@ export async function signInWithCredentials({ email, password }: { email: string
 }
 
 export async function signUp(params: SignUpParams) {
-  const { fullName, email, password, avatar } = params;
+  const { fullName, email, password, image } = params;
   const existingUser = await prisma.user.findUnique({
     where: { email },
   });
@@ -37,7 +37,7 @@ export async function signUp(params: SignUpParams) {
         name: fullName,
         email,
         password: hashedPassword,
-        avatar,
+        image,
       },
     });
     await signInWithCredentials({ email, password });

@@ -1,6 +1,8 @@
 import { Anime } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import TrailerSection from "./TrailerSection";
+import CommentSection from "../CommentSection";
+import RelatedAnimeSection from "./RelatedAnimeSection";
 
 function CardSection({
   title,
@@ -38,6 +40,12 @@ function AnimeContentSections({ data }: { data: Anime }) {
       </CardSection>
       <CardSection title="Trailer" titleColor="bg-red-500">
         <TrailerSection trailer={data.trailer} />
+      </CardSection>
+      <CardSection title="Comments">
+        <CommentSection mal_id={data.mal_id} />
+      </CardSection>
+      <CardSection title="Related Anime">
+        <RelatedAnimeSection relations={data.relations} />
       </CardSection>
     </div>
   );
