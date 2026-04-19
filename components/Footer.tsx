@@ -1,8 +1,10 @@
 import { Github, Instagram } from "lucide-react";
 import Link from "next/link";
 import { Separator } from "./ui/separator";
+import { getCurrentSeason } from "@/lib/utils";
 
 function Footer() {
+  const { year, season } = getCurrentSeason();
   return (
     <footer className="bg-background border-t">
       <div className="py-8 px-4">
@@ -28,13 +30,13 @@ function Footer() {
               </Link>
             </div>
           </div>
-          <div className="flex flex-col md:flex-row items-normal md:items-center justify-normal md:justify-around colspan-1 md:col-span-3 gap-8">
+          <div className="flex flex-col md:flex-row items-normal md:items-center justify-normal md:justify-around col-span-1 md:col-span-3 gap-8">
             <div>
               <h3 className="font-bold text-lg mb-4">Quick Links</h3>
               <ul className="space-y-2">
                 <li>
                   <Link
-                    href="/"
+                    href="/anime/top"
                     className="text-muted-foreground hover:text-foreground"
                   >
                     Top Anime
@@ -42,7 +44,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="/"
+                    href="/anime/upcoming"
                     className="text-muted-foreground hover:text-foreground"
                   >
                     Upcoming
@@ -50,7 +52,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="/"
+                    href={`/anime/season/${year}/${season}`}
                     className="text-muted-foreground hover:text-foreground"
                   >
                     Ongoing
@@ -63,7 +65,7 @@ function Footer() {
               <ul className="space-y-2">
                 <li>
                   <Link
-                    href="/"
+                    href="/anime/top/bypopularity"
                     className="text-muted-foreground hover:text-foreground"
                   >
                     Most Popular
@@ -71,7 +73,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="/"
+                    href="/anime/top/airing"
                     className="text-muted-foreground hover:text-foreground"
                   >
                     Currently Airing
@@ -79,7 +81,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="/"
+                    href="/anime/top/movie"
                     className="text-muted-foreground hover:text-foreground"
                   >
                     Top Movies
